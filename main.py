@@ -30,7 +30,7 @@ def create_app():
         return User.query.filter_by(username=identity).one_or_none()
 
     # additional permissions to some users
-    @jwt.additional_permissions_loader
+    @jwt.additional_claims_loader
     def make_additional_permissions(identity):
         if identity == "user1":
             return {"employee": True }
