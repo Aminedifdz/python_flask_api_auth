@@ -151,6 +151,37 @@ def login_user():
 @auth_bp.get('/whoami')
 @jwt_required() 
 def whoami():
+
+    """
+    Get current user information
+    ---
+    tags:
+      - Auth
+    description: Return current user details.
+    security:
+      - bearerAuth: []
+    responses:
+      200:
+        description: Whoami successful
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: Whoami successful
+                user_details:
+                  type: object
+                  properties:
+                    username:
+                      type: string
+                      example: johndoe
+                    email:
+                      type: string
+                      example: johndoe@example.com
+    """
+
     claims = get_jwt()
     user = User.get_user_by_username(claims['sub'])
     
