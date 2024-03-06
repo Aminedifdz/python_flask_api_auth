@@ -4,11 +4,54 @@ from flask_jwt_extended import (create_access_token, create_refresh_token,
                                 get_jwt_identity
                                 )
 from models import User, TokenBlockList
+from flask_restx import Resource, Namespace
 
 auth_bp = Blueprint('auth', __name__)
 
 @auth_bp.post('/register')
 def register_user():
+
+    """
+    Register a new user
+    ---
+    tags:
+      - Auth
+    description: Create a new user account.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - username
+              - email
+              - password
+            properties:
+              username:
+                type: string
+                example: newuser
+              email:
+                type: string
+                example: newuser@example.com
+              password:
+                type: string
+                example: strongpassword
+    responses:
+      201:
+        description: User registered successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: User registered successfully
+      400:
+        description: Invalid request (missing required fields, user already exists, etc.)
+    """
+
     data = request.get_json()
     print(data)
     if not data or not data.get('username') or not data.get('password') or not data.get('email'):
