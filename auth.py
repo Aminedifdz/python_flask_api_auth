@@ -77,6 +77,52 @@ def register_user():
 
 @auth_bp.post('/login')
 def login_user():
+
+    """
+    User login
+    ---
+    tags:
+      - Auth
+    description: Authenticate user and return access and refresh tokens.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+                example: johndoe
+              password:
+                type: string
+                example: password123
+    responses:
+      200:
+        description: Login successful
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: Login successful
+                tokens:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                    refresh_token:
+                      type: string
+      400:
+        description: Missing username or password
+      401:
+        description: Invalid password
+      404:
+        description: User not found
+    """
+
     data = request.get_json()
     print(data)
     if not data or not data.get('username') or not data.get('password'):
