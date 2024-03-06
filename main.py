@@ -14,7 +14,6 @@ def create_app():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # To suppress the warning
     app.config['JWT_SECRET_KEY'] = 'f613421a23df8917e75a7dfb'
     
-    api.init_app(app)
     db.init_app(app)  # Initialize the database with the Flask app
     jwt.init_app(app)
     swagger.init_app(app)
