@@ -194,6 +194,27 @@ def whoami():
 @auth_bp.get('/refresh')
 @jwt_required(refresh=True)
 def refresh():
+
+    """
+    Refresh access token
+    ---
+    tags:
+      - Auth
+    description: Refresh the access token using the refresh token.
+    security:
+      - bearerAuth: []
+    responses:
+      200:
+        description: Access token refreshed successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                access_token:
+                  type: string
+    """
+
     current_user = get_jwt_identity()
     access_token = create_access_token(identity=current_user)
     return jsonify({"access_token": access_token}), 200
