@@ -222,6 +222,28 @@ def refresh():
 @auth_bp.get('/revoke_token')
 @jwt_required(verify_type=False)
 def logout_user():
+
+    """
+    Revoke a token (logout)
+    ---
+    tags:
+      - Auth
+    description: Revoke the current access or refresh token.
+    security:
+      - bearerAuth: []
+    responses:
+      200:
+        description: Token revoked successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: "<token_type> revoked successfully"
+    """
+
     jwt = get_jwt()
 
     jti = jwt['jti']
