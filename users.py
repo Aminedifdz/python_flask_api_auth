@@ -10,6 +10,50 @@ user_bp = Blueprint('user', __name__)
 @user_bp.get('/all')
 @jwt_required()
 def get_all_users():
+    """
+    Retrieves all users from the database based on pagination parameters.
+
+    ---
+    tags:
+      - Users
+    security:
+      - BearerAuth: []
+    parameters:
+      - in: query
+        name: page
+        schema:
+          type: integer
+          default: 1
+        description: Page number for pagination
+      - in: query
+        name: per_page
+        schema:
+          type: integer
+          default: 3
+        description: Users per page for pagination
+    responses:
+      200:
+        description: A JSON object containing the list of users
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                users:
+                  type: array
+                  items:
+                    type: object
+      401:
+        description: Unauthorized access
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+    """
+    
     claims = get_jwt()
 
     if claims.get('employee') == True:
